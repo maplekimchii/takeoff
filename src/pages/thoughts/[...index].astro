@@ -1,0 +1,92 @@
+---
+// Rest param so the page is only generated when posts exist (drafts are dev-only).
+import Base from '../../layouts/Base.astro';
+import SectionDivider from '../../components/SectionDivider.astro';
+import { formatDate, getPosts } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.length ? [{ params: { index: undefined } }] : [];
+}
+
+const posts = await getPosts();
+---
+
+<Base title="Thoughts" description="Notes and short essays by Sean Kim.">
+  <section class="container section">
+    <SectionDivider title="Thoughts" level="h1" />
+    <div class="card board">
+      <div class="head" aria-hidden="true">
+        <span>Log code</span><span>Topic</span><span>Title / focus area</span><span>Read time</span>
+      </div>
+      <ul>
+        {posts.map((p) => (
+          <li class="row">
+            <span class="code">{p.data.code}</span>
+            <span class="topic"><span class="chip">{p.data.topic}</span></span>
+            <div class="text">
+              <h2 class="title"><a href={`/thoughts/${p.id}`}>{p.data.title}</a></h2>
+              <p class="summary">{p.data.summary}</p>
+            </div>
+            <span class="read">{p.data.readMinutes ? `${p.data.readMinutes} min` : ''}</span>
+            <span class="date">{formatDate(p.data.date)}{p.data.draft && ' · DRAFT'}</span>
+            <a class="text-link more" href={`/thoughts/${p.id}`} aria-label={`Read article: ${p.data.title}`}>Read article →</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .board { overflow: hidden; }
+  .head {
+    display: grid;
+    grid-template-columns: 100px 180px 1fr 100px;
+    padding: 18px 20px;
+    background: linear-gradient(90deg, #0066b3 0%, #003a70 70%, #0b1a33 100%);
+    color: var(--white);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  .head span:last-child { text-align: right; }
+  .row {
+    display: grid;
+    grid-template-columns: 100px 180px 1fr 100px;
+    grid-template-areas: 'code topic text read' 'date . . more';
+    row-gap: 18px;
+    padding: 28px 24px;
+    background: var(--silver-50);
+    border-top: 1px solid var(--silver-200);
+  }
+  .row:first-child { border-top: 0; }
+  .code { grid-area: code; font-family: var(--font-mono); font-weight: 700; font-size: 12px; color: var(--main-blue); }
+  .topic { grid-area: topic; }
+  .chip {
+    padding: 3px 8px;
+    border: 1px solid var(--silver-200);
+    background: var(--silver-100);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+  .text { grid-area: text; }
+  .title { font-weight: 800; font-size: 17px; line-height: 1.2; }
+  .title a { color: var(--ink); }
+  .summary { margin-top: 4px; font-size: 14px; color: var(--muted); }
+  .read { grid-area: read; text-align: right; font-family: var(--font-mono); font-size: 13px; text-transform: uppercase; }
+  .date { grid-area: date; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .more { grid-area: more; justify-self: end; white-space: nowrap; }
+
+  @media (max-width: 767px) {
+    .head { display: none; }
+    .row {
+      grid-template-columns: 1fr auto;
+      grid-template-areas: 'code read' 'text text' 'date more';
+      padding: 20px 16px;
+      row-gap: 10px;
+    }
+    .topic { display: none; }
+  }
+</style>

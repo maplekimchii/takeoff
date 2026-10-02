@@ -1,0 +1,42 @@
+---
+interface Props {
+  title: string;
+  id?: string;
+  /** Heading level for the section title. */
+  level?: 'h1' | 'h2';
+}
+const { title, id, level = 'h2' } = Astro.props;
+const Tag = level;
+---
+
+<div class="divider">
+  <Tag class="chip" id={id}>{title}</Tag>
+  <span class="rule" aria-hidden="true"></span>
+</div>
+
+<style>
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-block: 8px;
+    background: var(--silver-100);
+    border: 1px solid var(--silver-200);
+  }
+  .chip {
+    padding: 8px 16px;
+    background: var(--sky-blue);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    line-height: normal;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .rule {
+    flex: 1;
+    border-top: 1px dashed var(--silver-200);
+    margin-right: 8px;
+  }
+</style>

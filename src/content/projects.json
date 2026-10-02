@@ -1,0 +1,102 @@
+[
+  {
+    "id": "tripscape",
+    "code": "SK-101",
+    "type": "Full-stack",
+    "year": null,
+    "title": "TripScape",
+    "summary": "A collaborative trip planner where Kanban, calendar and map views stay in sync in real time.",
+    "role": "Full-stack build and deploy",
+    "stack": ["React", "TypeScript", "Tailwind", "FastAPI", "PostgreSQL", "SQLAlchemy", "Docker"],
+    "links": [{ "label": "GitHub", "href": "https://github.com/maplekimchii/TripScape-public" }],
+    "thumbnail": null,
+    "featured": true,
+    "caseStudy": {
+      "problem": "Several people planning one trip need to edit the same plan at once, across a Kanban board, a calendar and a map, without the views drifting apart.",
+      "whatIDid": [
+        "Built a React and TypeScript front end on an async FastAPI and PostgreSQL back end.",
+        "Wrote one state-management layer that keeps the Kanban, calendar and map views in sync.",
+        "Added real-time multi-user editing with per-trip WebSocket broadcasts from the service layer.",
+        "Added client-side auto-reconnect and self-echo suppression so optimistic updates don’t flicker.",
+        "Set up CI/CD with GitHub Actions."
+      ],
+      "outcome": [
+        "Shipped on Google Cloud Run, Vercel and Neon Postgres."
+      ]
+    }
+  },
+  {
+    "id": "newschecker",
+    "code": "SK-102",
+    "type": "Machine learning",
+    "year": null,
+    "title": "NewsChecker",
+    "summary": "A fine-tuned DeBERTa model that flags political bias in news sentences, with about 41% less error than a GPT-4o-mini baseline.",
+    "role": "Model training and evaluation",
+    "stack": ["Python", "PyTorch", "Hugging Face", "scikit-learn", "Pandas", "OpenAI API"],
+    "links": [{ "label": "GitHub", "href": "https://github.com/maplekimchii/NewsChecker-public" }],
+    "thumbnail": null,
+    "featured": true,
+    "caseStudy": {
+      "problem": "Detect political bias at the sentence level in news articles, and check that the model still works on outlets and topics it hasn’t seen.",
+      "whatIDid": [
+        "Fine-tuned DeBERTa-v3-base on 3,700 expert-annotated news sentences.",
+        "Designed outlet-holdout and topic-holdout ablations with in-distribution controls to isolate out-of-distribution gaps.",
+        "Compared against a GPT-4o-mini zero-shot baseline on a seeded 200-sentence holdout."
+      ],
+      "outcome": [
+        "Macro F1 0.870 ± 0.005 and ROC AUC 0.937 across 3 random seeds, with bootstrap 95% confidence intervals.",
+        "Cut classification error by about 41% versus the GPT-4o-mini baseline (macro F1 0.87 vs 0.78).",
+        "Threshold tuning raised biased-class F1 to 0.92."
+      ]
+    }
+  },
+  {
+    "id": "pairs-trading",
+    "code": "SK-103",
+    "type": "Quant research",
+    "year": null,
+    "title": "Pairs Trading Engine with Kalman Filter",
+    "summary": "A pairs-trading backtest that tracks a time-varying hedge ratio with a Kalman filter. Out-of-sample Sharpe 1.1.",
+    "role": "Research and backtesting",
+    "stack": ["Python", "NumPy", "statsmodels", "Pandas"],
+    "links": [],
+    "thumbnail": null,
+    "featured": true,
+    "caseStudy": {
+      "problem": "A fixed OLS hedge ratio drifts over time and carries errors-in-variables bias, which weakens a pairs-trading signal.",
+      "whatIDid": [
+        "Screened cointegrated equity pairs with Engle-Granger and ADF tests, using Benjamini-Hochberg correction.",
+        "Used a Kalman filter to track a time-varying hedge ratio instead of OLS.",
+        "Backtested 15+ years with causal z-score signals and 5 bps trading costs."
+      ],
+      "outcome": [
+        "Out-of-sample Sharpe ratio of 1.1, with maximum drawdown under 12%."
+      ]
+    }
+  },
+  {
+    "id": "market-regimes",
+    "code": "SK-104",
+    "type": "Quant research",
+    "year": null,
+    "title": "Market Regime Detection & Strategy Switching",
+    "summary": "A Gaussian HMM, built from scratch, that detects market regimes and sizes positions for each one.",
+    "role": "Modelling and backtesting",
+    "stack": ["Python", "hmmlearn", "NumPy", "Pandas", "matplotlib"],
+    "links": [],
+    "thumbnail": null,
+    "featured": false,
+    "caseStudy": {
+      "problem": "One strategy rarely suits every market. Spotting the current regime makes it possible to size positions to match.",
+      "whatIDid": [
+        "Built a Gaussian HMM from scratch (Baum-Welch EM and Viterbi) on volatility, VIX and skewness features.",
+        "Chose the number of regimes with BIC and checked them against the 2008 financial crisis, 2020 COVID crash and 2022 rate shock.",
+        "Applied causal, forward-only filtering and Kelly-criterion sizing per regime."
+      ],
+      "outcome": [
+        "Reduced drawdown in high-volatility regimes."
+      ]
+    }
+  }
+]

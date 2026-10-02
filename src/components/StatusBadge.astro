@@ -1,0 +1,28 @@
+---
+export type Status = 'On time' | 'Boarding' | 'Final call' | 'Landed';
+interface Props {
+  status: Status;
+}
+const { status } = Astro.props;
+const cls = status.toLowerCase().replace(' ', '-');
+---
+
+<span class:list={['badge', cls]}>{status}</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    justify-content: center;
+    width: 120px;
+    padding: 4px 8px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    line-height: normal;
+    text-transform: uppercase;
+  }
+  .on-time { background: var(--silver-100); color: var(--main-blue); }
+  .boarding { background: var(--sky-blue); color: var(--ink); }
+  .final-call { background: var(--white); border: 1px solid var(--main-red); color: var(--main-red); }
+  .landed { background: var(--silver-200); color: var(--ink); }
+</style>

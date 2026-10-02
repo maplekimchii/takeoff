@@ -1,0 +1,75 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatRange } from '../lib/content';
+
+interface Props {
+  entry: CollectionEntry<'experience'>;
+}
+const e = Astro.props.entry.data;
+const detail = e.details[0];
+---
+
+<article class="itinerary card">
+  <div class="when">
+    <p class="term">{e.term}</p>
+    <p class="type">{e.type || formatRange(e.start, e.end)}</p>
+  </div>
+  <div class="what">
+    <h3 class="role">{e.role}</h3>
+    <p class="org">{e.organisation}</p>
+    {detail && <p class="detail">{detail}</p>}
+  </div>
+</article>
+
+<style>
+  .itinerary {
+    display: flex;
+    gap: 24px;
+    padding: 20px 24px;
+  }
+  .when {
+    flex: 0 0 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: var(--font-mono);
+    line-height: normal;
+    text-transform: uppercase;
+  }
+  .term {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .type {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .what {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .role {
+    font-weight: 800;
+    font-size: 18px;
+    line-height: normal;
+  }
+  .org {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--main-blue);
+  }
+  .detail {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+  @media (max-width: 767px) {
+    .itinerary { flex-direction: column; gap: 10px; padding: 18px; }
+    .when { flex-basis: auto; flex-direction: row; gap: 12px; align-items: baseline; }
+  }
+</style>

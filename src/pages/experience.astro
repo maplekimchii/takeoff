@@ -1,0 +1,144 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import { formatRange, getExperience, profile, skills, termCode } from '../lib/content';
+
+const experience = await getExperience();
+---
+
+<Base title="Experience" description={`Experience and skills of ${profile.name}: ${experience.slice(0, 4).map((e) => `${e.data.role} at ${e.data.organisation}`).join('; ')}.`}>
+  <h1 class="visually-hidden">Experience and skills</h1>
+
+  <section class="container section" aria-labelledby="exp-h">
+    <SectionDivider title="Experience" id="exp-h" />
+    <ol class="list">
+      {experience.map((e, i) => {
+        const d = e.data;
+        return (
+          <li class="card seg">
+            <div class="tile" aria-hidden="true">
+              <span class="seg-no">SEG-{String(i + 1).padStart(2, '0')}</span>
+              <span class="seg-term">{termCode(d.term)}</span>
+            </div>
+            <div class="body">
+              <div class="top">
+                <div>
+                  <h3 class="role">{d.role}</h3>
+                  <p class="org">{d.organisation} · {d.location}</p>
+                </div>
+                <p class="when">{formatRange(d.start, d.end)}{d.type && ` · ${d.type}`}</p>
+              </div>
+              {d.details.length > 0 && (
+                <ul class="details">{d.details.map((x) => <li>{x}</li>)}</ul>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  </section>
+
+  <section class="container section" aria-labelledby="skills-h">
+    <SectionDivider title="Skills" id="skills-h" />
+    <div class="skill-grid">
+      {skills.groups.map((g) => (
+        <div class="card skill-card">
+          <h3 class="skill-head">{g.title}</h3>
+          <ul class="skill-list">{g.items.map((s) => <li>{s}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .list { display: flex; flex-direction: column; gap: 24px; }
+  .seg {
+    display: flex;
+    overflow: hidden;
+  }
+  .tile {
+    flex: 0 0 200px;
+    align-self: flex-start;
+    min-height: 121px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: linear-gradient(90deg, #0066b3, #005a9c);
+    color: var(--white);
+  }
+  .seg-no { font-family: var(--font-mono); font-weight: 700; font-size: 12px; }
+  .seg-term { font-weight: 800; font-size: 28px; line-height: 1; }
+  .body { flex: 1; min-width: 0; padding: 28px 32px; }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 16px;
+  }
+  .role { font-weight: 800; font-size: 20px; line-height: 1.2; }
+  .org { margin-top: 4px; font-size: 14px; color: var(--muted); }
+  .when {
+    flex: 0 0 auto;
+    padding: 4px 10px;
+    border: 1px solid var(--main-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--main-blue);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 16px;
+    border-top: 1px solid var(--silver-200);
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  .skill-card { overflow: hidden; }
+  .skill-head {
+    padding: 14px 16px;
+    background: var(--sky-blue);
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 24px 24px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .skill-list li::before {
+    content: '→';
+    margin-right: 14px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1023px) {
+    .skill-grid { grid-template-columns: 1fr 1fr; }
+    .top { flex-direction: column; }
+  }
+  @media (max-width: 767px) {
+    .seg { flex-direction: column; }
+    .tile { flex-basis: auto; min-height: 0; flex-direction: row; justify-content: flex-start; gap: 14px; padding: 12px 18px; align-self: stretch; }
+    .seg-term { font-size: 20px; }
+    .body { padding: 18px; }
+    .when { white-space: normal; }
+    .skill-grid { grid-template-columns: 1fr; }
+  }
+</style>

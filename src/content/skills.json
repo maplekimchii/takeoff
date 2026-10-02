@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "title": "Build",
+      "items": ["Python", "TypeScript", "JavaScript", "SQL", "Swift", "VBA", "React", "FastAPI", "SQLAlchemy", "PostgreSQL", "Docker", "GitHub Actions", "Google Cloud Platform", "Supabase", "Firebase", "Xcode"]
+    },
+    {
+      "title": "Data & ML",
+      "items": ["NumPy", "Pandas", "statsmodels", "scikit-learn", "PyTorch", "Hugging Face Transformers", "hmmlearn", "matplotlib", "Pydantic", "OpenAI API", "Gemini API"]
+    },
+    {
+      "title": "Finance",
+      "items": ["Financial modelling", "Valuations", "Market research", "Asset-liability management", "Bloomberg API"]
+    }
+  ],
+  "featured": ["Python", "TypeScript", "React", "FastAPI", "SQL", "PyTorch", "Pandas", "Financial modelling"]
+}

@@ -1,0 +1,9 @@
+[
+  { "id": "SEL", "city": "Seoul", "country": "South Korea", "lon": 126.98, "lat": 37.57, "label": "right", "km": 0 },
+  { "id": "WAS", "city": "Washington DC", "country": "USA", "lon": -77.04, "lat": 38.90, "label": "right-below", "km": 11164 },
+  { "id": "GVA", "city": "Geneva", "country": "Switzerland", "lon": 6.14, "lat": 46.20, "label": "left", "km": 17708 },
+  { "id": "DKR", "city": "Dakar", "country": "Senegal", "lon": -17.47, "lat": 14.69, "label": "left", "km": 21845 },
+  { "id": "MOW", "city": "Moscow", "country": "Russia", "lon": 37.62, "lat": 55.76, "label": "right", "km": 28360 },
+  { "id": "KUL", "city": "Kuala Lumpur", "country": "Malaysia", "lon": 101.69, "lat": 3.14, "label": "right", "km": 36487 },
+  { "id": "YYZ", "city": "Toronto", "country": "Canada", "lon": -79.38, "lat": 43.65, "label": "right-above", "km": 51298 }
+]

@@ -1,0 +1,104 @@
+---
+// Bag artwork from the Figma "Luggage" component (220×300 frame). Geometry is 1:1 with Figma.
+interface Props {
+  type: 'suitcase' | 'duffel' | 'backpack' | 'briefcase';
+  tag: string;
+}
+const { type, tag } = Astro.props;
+---
+
+<span class:list={['bag', type]} aria-hidden="true">
+  <span class="shadow"></span>
+  {type === 'suitcase' && (
+    <>
+      <span class="side"></span><span class="side shade"></span>
+      <span class="s-handle"></span>
+      <span class="top"></span>
+      <span class="rib" style="top:170px"></span><span class="rib" style="top:196px"></span><span class="rib" style="top:222px"></span>
+      <span class="tag" style="left:144px;top:252px">{tag}</span>
+    </>
+  )}
+  {type === 'duffel' && (
+    <>
+      <span class="side"></span><span class="side shade"></span>
+      <span class="top"></span>
+      <span class="zip"></span>
+      <svg class="arc" style="left:72px;top:166px" width="76" height="25" viewBox="0 0 76 25"><path d="M0 25C4.3626e-07 21.717 0.9829 18.4661 2.89258 15.4329C4.80226 12.3998 7.60132 9.64379 11.1299 7.32233C14.6586 5.00086 18.8477 3.15938 23.458 1.90301C28.0684 0.646643 33.0098 -4.30519e-07 38 0C42.9902 4.3052e-07 47.9316 0.646645 52.542 1.90301C57.1523 3.15938 61.3414 5.00087 64.8701 7.32233C68.3987 9.6438 71.1977 12.3998 73.1074 15.4329C75.0171 18.4661 76 21.717 76 25L68.4 25C68.4 22.3736 67.6137 19.7728 66.0859 17.3463C64.5582 14.9198 62.3189 12.715 59.496 10.8579C56.6731 9.00069 53.3219 7.5275 49.6336 6.52241C45.9453 5.51732 41.9922 5 38 5C34.0078 5 30.0547 5.51731 26.3664 6.52241C22.6781 7.5275 19.3269 9.00069 16.504 10.8579C13.6811 12.715 11.4418 14.9198 9.91406 17.3463C8.38632 19.7728 7.6 22.3736 7.6 25L0 25Z" fill="#0E2A52"/></svg>
+      <span class="tag" style="left:148px;top:238px">{tag}</span>
+    </>
+  )}
+  {type === 'backpack' && (
+    <>
+      <span class="side"></span><span class="side shade"></span>
+      <span class="top"></span>
+      <span class="pocket"></span><span class="pocket-zip"></span>
+      <svg class="arc" style="left:92px;top:132px" width="36" height="15" viewBox="0 0 36 15"><path d="M0 15C2.06649e-07 13.0302 0.465584 11.0796 1.37017 9.25975C2.27475 7.43986 3.60062 5.78628 5.27208 4.3934C6.94353 3.00052 8.92784 1.89563 11.1117 1.14181C13.2956 0.387986 15.6362 -2.58312e-07 18 0C20.3638 2.58312e-07 22.7044 0.387987 24.8883 1.14181C27.0722 1.89563 29.0565 3.00052 30.7279 4.3934C32.3994 5.78628 33.7252 7.43987 34.6298 9.25975C35.5344 11.0796 36 13.0302 36 15L30.6 15C30.6 13.6211 30.2741 12.2557 29.6409 10.9818C29.0077 9.70791 28.0796 8.5504 26.9095 7.57538C25.7395 6.60036 24.3505 5.82694 22.8218 5.29927C21.2931 4.77159 19.6547 4.5 18 4.5C16.3453 4.5 14.7069 4.77159 13.1782 5.29926C11.6495 5.82694 10.2605 6.60036 9.09046 7.57538C7.92044 8.55039 6.99233 9.7079 6.35912 10.9818C5.72591 12.2557 5.4 13.6211 5.4 15L0 15Z" fill="#0E2A52"/></svg>
+      <span class="tag" style="left:136px;top:154px">{tag}</span>
+    </>
+  )}
+  {type === 'briefcase' && (
+    <>
+      <svg class="arc" style="left:80px;top:166px" width="60" height="19" viewBox="0 0 60 19"><path d="M0 19C3.44416e-07 16.5049 0.775974 14.0342 2.28362 11.729C3.79126 9.42383 6.00104 7.32928 8.7868 5.56497C11.5726 3.80066 14.8797 2.40113 18.5195 1.44629C22.1593 0.491449 26.0603 -3.27195e-07 30 0C33.9397 3.27195e-07 37.8407 0.49145 41.4805 1.44629C45.1203 2.40113 48.4274 3.80066 51.2132 5.56497C53.999 7.32929 56.2087 9.42383 57.7164 11.729C59.224 14.0342 60 16.5049 60 19L52.2 19C52.2 17.1536 51.6258 15.3253 50.5101 13.6195C49.3945 11.9136 47.7592 10.3637 45.6978 9.05808C43.6363 7.75249 41.189 6.71684 38.4956 6.01025C35.8021 5.30367 32.9153 4.94 30 4.94C27.0847 4.94 24.1979 5.30367 21.5044 6.01025C18.811 6.71683 16.3637 7.75249 14.3022 9.05808C12.2408 10.3637 10.6055 11.9136 9.48987 13.6195C8.37422 15.3253 7.8 17.1536 7.8 19L0 19Z" fill="#D9E0E6"/></svg>
+      <span class="front"></span>
+      <span class="seam"></span>
+      <span class="clasp" style="left:58px"></span><span class="clasp" style="left:144px"></span>
+      <span class="b-top"></span><span class="b-top-light"></span>
+      <span class="tag" style="left:158px;top:216px">{tag}</span>
+    </>
+  )}
+</span>
+
+<style>
+  .bag {
+    position: absolute;
+    inset: 0;
+    transition: transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .bag > * { position: absolute; display: block; }
+  .shadow {
+    left: 24px; top: 278px; width: 172px; height: 20px;
+    border-radius: 50%;
+    background: var(--ink);
+    opacity: 0.35;
+  }
+  .side, .top, .front, .b-top {
+    border: 1.5px solid var(--ink);
+  }
+  .shade { background: var(--ink) !important; opacity: 0.28; border: 0; }
+
+  .suitcase .side { left: 30px; top: 236px; width: 160px; height: 52px; border-radius: 12px; background: var(--sky-blue); }
+  .suitcase .top { left: 30px; top: 148px; width: 160px; height: 104px; border-radius: 16px; background: var(--sky-blue); }
+  .s-handle { left: 92px; top: 256px; width: 36px; height: 9px; border-radius: 4px; background: var(--ink); }
+  .rib { left: 48px; width: 124px; height: 4px; border-radius: 2px; background: var(--white); opacity: 0.4; }
+
+  .duffel .side { left: 18px; top: 234px; width: 184px; height: 56px; border-radius: 26px; background: var(--main-red); }
+  .duffel .top { left: 18px; top: 188px; width: 184px; height: 74px; border-radius: 34px; background: var(--main-red); }
+  .zip { left: 46px; top: 222px; width: 128px; height: 3px; background: var(--ink); opacity: 0.45; }
+
+  .backpack .side { left: 46px; top: 246px; width: 128px; height: 44px; border-radius: 18px; background: var(--main-blue); }
+  .backpack .top { left: 46px; top: 148px; width: 128px; height: 114px; border-radius: 32px; background: var(--main-blue); }
+  .pocket { left: 68px; top: 194px; width: 84px; height: 54px; border-radius: 14px; background: var(--sky-blue); border: 1.5px solid var(--ink); }
+  .pocket-zip { left: 78px; top: 206px; width: 64px; height: 3px; background: var(--ink); opacity: 0.4; }
+
+  .front { left: 22px; top: 204px; width: 176px; height: 86px; border-radius: 8px; background: var(--ink); border-color: var(--sky-blue) !important; }
+  .seam { left: 22px; top: 238px; width: 176px; height: 2px; background: var(--sky-blue); opacity: 0.4; }
+  .clasp { top: 212px; width: 18px; height: 10px; border-radius: 2px; background: var(--sky-blue); }
+  .b-top { left: 22px; top: 184px; width: 176px; height: 26px; border-radius: 8px; background: var(--ink); border-color: var(--sky-blue) !important; }
+  .b-top-light { left: 22px; top: 184px; width: 176px; height: 26px; border-radius: 8px; background: var(--white); opacity: 0.14; }
+
+  .tag {
+    width: 34px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    background: var(--white);
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--ink);
+    transform: rotate(8deg);
+  }
+</style>

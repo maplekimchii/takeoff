@@ -1,0 +1,298 @@
+---
+import Base from '../layouts/Base.astro';
+import SplitFlap from '../components/SplitFlap.astro';
+import Button from '../components/Button.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ItineraryRow from '../components/ItineraryRow.astro';
+import DepartureRow from '../components/DepartureRow.astro';
+import JourneyMap from '../components/JourneyMap.astro';
+import { formatDate, getCities, getExperience, getPosts, getProjects, profile, skills } from '../lib/content';
+
+const projects = (await getProjects()).filter((p) => p.data.featured).slice(0, 3);
+const experience = (await getExperience()).filter((e) => e.data.featured).slice(0, 3);
+const posts = (await getPosts()).slice(0, 2);
+const cities = await getCities();
+const otherCities = cities.slice(0, -1).map((c) => c.data.city);
+const citiesSentence = `I’ve lived in ${otherCities.slice(0, -1).join(', ')} and ${otherCities.at(-1)}, and now call ${cities.at(-1)!.data.city} home.`;
+---
+
+<Base
+  title={profile.name}
+  description={`${profile.name}: ${profile.program} student at the ${profile.school}. ${profile.availability}.`}
+>
+  <section class="container hero" aria-labelledby="hero-name">
+    <h1 id="hero-name" class="visually-hidden">{profile.name}</h1>
+    <SplitFlap rows={['SEAN', 'KIM ']} />
+    <div class="intro">
+      <p class="status"><span class="dot" aria-hidden="true">●</span>{profile.availability}</p>
+      <p class="headline">{profile.headline}</p>
+      <p class="lede">{profile.intro}</p>
+      <dl class="facts">
+        <div><dt class="mono-label">School</dt><dd>{profile.school}</dd></div>
+        <div><dt class="mono-label">Graduating</dt><dd>{profile.graduation}</dd></div>
+        <div><dt class="mono-label">Based in</dt><dd>{profile.location}</dd></div>
+      </dl>
+      <div class="ctas">
+        <Button href={profile.resume} download>Résumé (PDF)</Button>
+        <Button href={`mailto:${profile.email}`} variant="secondary">Email me</Button>
+        <span class="social">
+          <a class="text-link" href={profile.linkedin} target="_blank" rel="noopener">LinkedIn ↗<span class="visually-hidden"> (opens in a new tab)</span></a>
+          <a class="text-link" href={profile.github} target="_blank" rel="noopener">GitHub ↗<span class="visually-hidden"> (opens in a new tab)</span></a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section" aria-labelledby="projects-h">
+    <SectionDivider title="Projects" id="projects-h" />
+    <ul class="grid-3">
+      {projects.map((p) => <li><ProjectCard project={p} /></li>)}
+    </ul>
+    <p class="see-more"><a href="/projects">See all projects · G03 →</a></p>
+  </section>
+
+  <section class="container section" aria-labelledby="exp-h">
+    <SectionDivider title="Experience & Education" id="exp-h" />
+    <div class="exp-cols">
+      <ul class="stack">
+        {experience.map((e) => <li><ItineraryRow entry={e} /></li>)}
+      </ul>
+      <div class="stack">
+        <div class="card side-card">
+          <p class="mono-label">Education</p>
+          <h3 class="school">{profile.school}</h3>
+          <p class="muted">{profile.program} · minors in {profile.minors}</p>
+          <p class="muted">Class of {profile.graduation} · {profile.average} cumulative average</p>
+          <p class="muted">{profile.honours[0]}</p>
+        </div>
+        <div class="card side-card">
+          <p class="mono-label">Skills</p>
+          <ul class="chips">
+            {skills.featured.map((s) => <li>{s}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="see-more"><a href="/experience">Full itinerary & skills · G04 →</a></p>
+  </section>
+
+  <section class="container section" aria-labelledby="about-h">
+    <SectionDivider title="About" id="about-h" />
+    <div class="about-row">
+      <div class="card about-card">
+        <p class="mono-label">Seven cities · Four continents</p>
+        <h3 class="about-title">Seoul to Toronto, the long way round.</h3>
+        <p class="muted">{citiesSentence}</p>
+        <p class="route" aria-label={`Route: ${cities.map((c) => c.data.city).join(', ')}`}>
+          {cities.map((c) => c.id).join(' → ')}
+        </p>
+        <p class="more"><a class="text-link" href="/about">More about me · G02 →</a></p>
+      </div>
+      <a class="map-link" href="/about" aria-label="Where I’ve lived: open the journey map on the About page">
+        <JourneyMap />
+      </a>
+    </div>
+  </section>
+
+  {posts.length > 0 && (
+    <section class="container section" aria-labelledby="thoughts-h">
+      <SectionDivider title="Latest thoughts" id="thoughts-h" />
+      <ul class="card board">
+        {posts.map((p) => (
+          <DepartureRow
+            code={p.data.code}
+            type="Thought"
+            title={p.data.title}
+            href={`/thoughts/${p.id}`}
+            date={formatDate(p.data.date)}
+            status={p.data.draft ? "Boarding" : "Landed"}
+          />
+        ))}
+      </ul>
+      <p class="see-more"><a href="/thoughts">All thoughts · G05 →</a></p>
+    </section>
+  )}
+
+  <section class="contact" aria-labelledby="contact-h">
+    <div class="container contact-row">
+      <div>
+        <h2 id="contact-h" class="contact-title">Let’s talk.</h2>
+        <p class="contact-copy">{profile.lookingFor}</p>
+      </div>
+      <div class="contact-actions">
+        <a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}</a>
+        <div class="ctas">
+          <Button href={profile.resume} download>Résumé (PDF)</Button>
+          <a class="text-link on-ink" href={profile.linkedin} target="_blank" rel="noopener">LinkedIn ↗<span class="visually-hidden"> (opens in a new tab)</span></a>
+          <a class="text-link on-ink" href={profile.github} target="_blank" rel="noopener">GitHub ↗<span class="visually-hidden"> (opens in a new tab)</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 72px;
+    padding-block: 72px;
+  }
+  .intro {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--white);
+    border: 1.5px solid var(--sky-blue);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .dot { color: var(--main-red); font-size: 10px; }
+  .headline {
+    font-weight: 800;
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.1;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 62ch;
+  }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 40px;
+  }
+  .facts div { display: flex; flex-direction: column; gap: 4px; }
+  .facts dd { font-weight: 700; font-size: 16px; }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  .social {
+    display: inline-flex;
+    gap: 20px;
+    padding-left: 12px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .exp-cols {
+    display: grid;
+    grid-template-columns: minmax(0, 820fr) minmax(0, 400fr);
+    gap: 24px;
+    align-items: start;
+  }
+  .stack { display: flex; flex-direction: column; gap: 12px; }
+  .side-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 24px;
+  }
+  .school { font-weight: 800; font-size: 18px; line-height: normal; }
+  .muted { color: var(--muted); font-size: 14px; line-height: 1.4; }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .chips li {
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: var(--silver-100);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .about-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+  .about-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px;
+  }
+  .about-title { font-weight: 800; font-size: 20px; }
+  .route {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--main-blue);
+  }
+  .more { margin-top: auto; padding-top: 12px; }
+  .map-link {
+    display: block;
+    align-self: center;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .board { padding: 0; }
+
+  .contact {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .contact-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px 48px;
+    padding-block: 72px;
+  }
+  .contact-title { font-weight: 800; font-size: 40px; }
+  .contact-copy { margin-top: 12px; font-size: 15px; color: var(--silver-200); max-width: 60ch; }
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  .contact-email {
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--sky-blue);
+    overflow-wrap: anywhere;
+  }
+  .on-ink { color: var(--sky-blue); }
+
+  @media (max-width: 1023px) {
+    .hero { gap: 40px; }
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .exp-cols, .about-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 767px) {
+    .hero { flex-direction: column; align-items: flex-start; padding-block: 40px; gap: 32px; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .social { padding-left: 0; }
+    .contact-actions { align-items: flex-start; }
+    .contact-row { padding-block: 48px; }
+  }
+</style>

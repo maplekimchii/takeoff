@@ -1,0 +1,24 @@
+<svg width="67" height="23" viewBox="0 0 67 23" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<g id="Aircraft / Side" filter="url(#filter0_d_0_1)">
+<path id="far-wing" d="M26.336 12.25H38.336L32.336 19.25H28.336L26.336 12.25Z" fill="#D9E0E6" stroke="black"/>
+<path id="fin" d="M5.336 11.25L2.336 1.25H7.336L18.336 8.25L5.336 11.25Z" fill="#71CBEB" stroke="#154D9E" stroke-width="0.5"/>
+<rect id="fuselage" x="6.586" y="7.5" width="57.5" height="7.5" rx="3.75" fill="#71CBEB" stroke="#154D9E" stroke-width="0.5"/>
+<rect id="belly" x="13.336" y="11.8501" width="46" height="3" rx="1.5" fill="white"/>
+<rect id="windows" opacity="0.45" x="17.336" y="9.6499" width="38" height="1" fill="#0E2A52"/>
+<rect id="cockpit" x="58.336" y="9.25" width="3" height="1.4" rx="0.6" fill="#0E2A52"/>
+<path id="stabilizer" d="M5.336 10.25H13.336L10.336 12.75H6.336L5.336 10.25Z" fill="#D9E0E6" stroke="black"/>
+<rect id="engine" x="29.636" y="14.55" width="10.4" height="3.9" rx="1.9" fill="white" stroke="#D9E0E6" stroke-width="0.6"/>
+<circle id="tail-mark" cx="7.336" cy="5.25" r="1.6" fill="white" stroke="#EE1229" stroke-width="0.8"/>
+</g>
+<defs>
+<filter id="filter0_d_0_1" x="0" y="-0.75" width="68.336" height="26" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape"/>
+</filter>
+</defs>
+</svg>

@@ -1,0 +1,47 @@
+---
+import { profile } from '../lib/content';
+---
+
+<footer class="site-footer">
+  <div class="container row">
+    <p class="route">
+      <span class="mono-label">Contact route</span>
+      <a href={`mailto:${profile.email}`}>{profile.email}</a>
+    </p>
+    <p class="copy">© 2026 {profile.name} · {profile.location}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--sky-blue);
+    color: var(--ink);
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    padding-block: 12px;
+    min-height: 45px;
+  }
+  .route {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .route .mono-label { color: var(--ink); }
+  .route a {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .copy {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+</style>

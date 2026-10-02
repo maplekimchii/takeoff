@@ -1,0 +1,51 @@
+---
+import FlapTile from './FlapTile.astro';
+
+interface Props {
+  rows: string[]; // each row padded to the same length; spaces are blank tiles
+}
+const { rows } = Astro.props;
+---
+
+<div class="split-flap" aria-hidden="true">
+  {rows.map((row) => (
+    <div class="flap-row">
+      {[...row].map((c) => <FlapTile char={c} />)}
+    </div>
+  ))}
+</div>
+
+<script>
+  // One-time flip-in: each tile cycles a few characters then settles. Under 1.2s total.
+  const tiles = document.querySelectorAll<HTMLElement>('.split-flap .flap');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    tiles.forEach((tile, i) => {
+      const el = tile.querySelector<HTMLElement>('.char');
+      const final = tile.dataset.char ?? '';
+      if (!el || final === ' ') return;
+      let n = 0;
+      const cycles = 6;
+      setTimeout(() => {
+        const id = setInterval(() => {
+          n += 1;
+          el.textContent = n >= cycles ? final : glyphs[Math.floor(Math.random() * glyphs.length)];
+          if (n >= cycles) clearInterval(id);
+        }, 70);
+      }, i * 40);
+    });
+  }
+</script>
+
+<style>
+  .split-flap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .flap-row {
+    display: flex;
+    gap: 8px;
+  }
+</style>

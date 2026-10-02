@@ -1,0 +1,189 @@
+---
+import PlaneLogo from '../icons/plane-logo.svg';
+
+interface Props {
+  current: string; // pathname of the current page
+  showThoughts: boolean;
+}
+const { current, showThoughts } = Astro.props;
+
+const items = [
+  { gate: 'G01', label: 'Home', href: '/' },
+  { gate: 'G02', label: 'About', href: '/about' },
+  { gate: 'G03', label: 'Projects', href: '/projects' },
+  { gate: 'G04', label: 'Experiences', href: '/experience' },
+  ...(showThoughts ? [{ gate: 'G05', label: 'Thoughts', href: '/thoughts' }] : []),
+];
+const isActive = (href: string) =>
+  href === '/' ? current === '/' : current === href || current.startsWith(`${href}/`);
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/" aria-label="Sean Kim, home">
+      <span class="brand-mark"><PlaneLogo width={24} height={24} aria-hidden="true" /></span>
+      <span class="brand-name">SEAN KIM</span>
+    </a>
+
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="menu-icon" aria-hidden="true"></span>
+      <span>Menu</span>
+    </button>
+
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        {items.map((it) => (
+          <li>
+            <a
+              class:list={['nav-item', { active: isActive(it.href) }]}
+              href={it.href}
+              aria-current={isActive(it.href) ? 'page' : undefined}
+            >
+              <span class="gate">{it.gate}</span>
+              <span class="label">{it.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const nav = document.getElementById('site-nav');
+  if (btn && nav) {
+    const set = (open: boolean) => {
+      btn.setAttribute('aria-expanded', String(open));
+      nav.classList.toggle('open', open);
+    };
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        set(false);
+        btn.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--silver-50) 94%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 24px;
+    gap: 16px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .brand-mark {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    background: var(--sky-blue);
+  }
+  .brand-name {
+    font-weight: 800;
+    font-size: 18px;
+  }
+  .nav ul {
+    display: flex;
+    gap: 16px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--white);
+    border: 1px solid var(--silver-200);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-item:hover {
+    border-color: var(--sky-blue);
+    text-decoration: none;
+  }
+  .nav-item.active {
+    background: var(--sky-blue);
+    border-color: var(--sky-blue);
+  }
+  .gate {
+    padding: 2px 6px;
+    background: var(--silver-100);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--main-blue);
+  }
+  .active .gate { background: var(--white); }
+  .label {
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+  .menu-btn { display: none; }
+
+  @media (max-width: 1023px) {
+    .bar { padding-block: 16px; }
+    .menu-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--white);
+      border: 1px solid var(--silver-200);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+    }
+    .menu-icon,
+    .menu-icon::before,
+    .menu-icon::after {
+      display: block;
+      width: 16px;
+      height: 2px;
+      background: var(--ink);
+      position: relative;
+    }
+    .menu-icon::before,
+    .menu-icon::after {
+      content: '';
+      position: absolute;
+      left: 0;
+    }
+    .menu-icon::before { top: -5px; }
+    .menu-icon::after { top: 5px; }
+
+    .nav {
+      display: none;
+      position: absolute;
+      inset: 100% 0 auto 0;
+      background: var(--silver-50);
+      border-bottom: 1px solid var(--silver-200);
+      padding: 8px var(--gutter) 20px;
+    }
+    .nav.open { display: block; }
+    .nav ul {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+</style>

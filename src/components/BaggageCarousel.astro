@@ -1,0 +1,135 @@
+---
+import Luggage from './Luggage.astro';
+import { getInterests } from '../lib/content';
+
+const interests = await getInterests();
+---
+
+<div class="carousel-wrap">
+  <p class="mono-label hint" id="bags-hint">Tap a bag to see what’s inside.</p>
+  <div class="carousel" role="region" aria-label="Interests carousel" aria-describedby="bags-hint" tabindex="0">
+    <ul class="belt">
+      {interests.map((it, i) => {
+        const tag = String(i + 1).padStart(2, '0');
+        const cardId = `interest-${it.id}`;
+        return (
+          <li class="slot">
+            <div class:list={['interest-card', it.data.bag]} id={cardId}>
+              <p class="kicker">Interest</p>
+              <p class="title">{it.data.title}</p>
+              {it.data.blurb && <p class="blurb">{it.data.blurb}</p>}
+            </div>
+            <button class="bag-btn" type="button" aria-expanded="false" aria-controls={cardId} aria-label={`Bag ${tag}`}>
+              <Luggage type={it.data.bag} tag={tag} />
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.bag-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      btn.setAttribute('aria-expanded', String(btn.getAttribute('aria-expanded') !== 'true'));
+    });
+  });
+</script>
+
+<style>
+  .carousel-wrap > * + * { margin-top: 24px; }
+  .hint { color: var(--muted); font-size: 11px; text-transform: none; letter-spacing: 0.02em; }
+  .carousel {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .belt {
+    position: relative;
+    display: flex;
+    gap: 40px;
+    min-width: 100%;
+    width: max-content;
+    padding: 0 24px 72px;
+  }
+  /* Conveyor seen from ~35° above: back rail, slatted belt, front lip, brushed-steel skirt */
+  .belt::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 186px;
+    height: 186px;
+    z-index: 0;
+    background:
+      /* back rail */
+      linear-gradient(#f4f7fa, #c7d0d8) top / 100% 8px no-repeat,
+      /* slatted belt */
+      repeating-linear-gradient(90deg, transparent 0 58px, rgb(113 203 235 / 0.16) 58px 60px) 0 8px / 100% 110px no-repeat,
+      linear-gradient(#0b2245, #183766 70%, #0e2a52) 0 8px / 100% 110px no-repeat,
+      /* front lip */
+      linear-gradient(#ffffff, #cfd8e0) 0 118px / 100% 10px no-repeat,
+      /* skirt with panel seams */
+      repeating-linear-gradient(90deg, transparent 0 173px, rgb(14 42 82 / 0.08) 173px 175px) 0 128px / 100% 58px no-repeat,
+      linear-gradient(#e7ecf0, #d4dbe2 50%, #e9eef2) 0 128px / 100% 58px no-repeat;
+    border-bottom: 4px solid var(--silver-200);
+  }
+  .slot {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 220px;
+    height: 300px;
+    scroll-snap-align: center;
+  }
+  .bag-btn {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .bag-btn:focus-visible { outline-offset: -4px; }
+  .bag-btn[aria-expanded='true'] :global(.bag) { transform: translateY(8px); }
+
+  .interest-card {
+    position: absolute;
+    left: 10px;
+    width: 200px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px;
+    background: var(--white);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(52px) scale(0.96);
+    transition: opacity 350ms ease-out, transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s 350ms;
+  }
+  /* Bottom-anchored so the card always ends just above its bag, with or without a blurb */
+  .interest-card.suitcase { bottom: 157px; }
+  .interest-card.duffel, .interest-card.briefcase { bottom: 139px; }
+  .interest-card.backpack { bottom: 173px; }
+  .slot:has([aria-expanded='true']) .interest-card {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 350ms ease-out, transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s;
+  }
+  .kicker {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 10px;
+    color: var(--main-blue);
+    text-transform: uppercase;
+  }
+  .title { font-weight: 800; font-size: 18px; line-height: 1.15; }
+  .blurb { font-size: 12px; color: var(--muted); line-height: 1.35; }
+</style>

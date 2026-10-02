@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import SectionDivider from '../../components/SectionDivider.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getProjects, profile } from '../../lib/content';
+
+const projects = await getProjects();
+---
+
+<Base title="Projects" description={`Projects by ${profile.name}: ${projects.map((p) => p.data.title).join(', ')}.`}>
+  <section class="container section">
+    <SectionDivider title="Projects" level="h1" />
+    <ul class="grid">
+      {projects.map((p) => <li><ProjectCard project={p} size="large" headingLevel="h2" /></li>)}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
+  }
+  @media (max-width: 767px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>

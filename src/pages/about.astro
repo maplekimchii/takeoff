@@ -1,0 +1,168 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import BaggageCarousel from '../components/BaggageCarousel.astro';
+import JourneyMap from '../components/JourneyMap.astro';
+import { getCities, getInterests, profile } from '../lib/content';
+
+const cities = await getCities();
+const interests = await getInterests();
+const countries = new Set(cities.map((c) => c.data.country)).size;
+---
+
+<Base
+  title="About"
+  description={`About ${profile.name}: ${profile.program} student at the ${profile.school}, based in ${profile.location}. Seven cities, four continents.`}
+>
+  <h1 class="visually-hidden">About {profile.name}</h1>
+
+  <section class="container section" aria-labelledby="passport-h">
+    <SectionDivider title="About" id="passport-h" />
+    <article class="card passport">
+      <div class="photo" aria-hidden="true">
+        <span>SK</span>
+      </div>
+      <div class="fields">
+        <p class="doc-title">{profile.nationality}</p>
+        <dl class="grid">
+          <div><dt class="mono-label">Surname / 성</dt><dd>{profile.surname.toUpperCase()}</dd></div>
+          <div><dt class="mono-label">Given names / 이름</dt><dd>{profile.givenNames.toUpperCase()}</dd></div>
+          <div><dt class="mono-label">Nationality / 국적</dt><dd>{profile.nationality.toUpperCase()}</dd></div>
+          <div><dt class="mono-label">Based in / 거주지</dt><dd>{profile.location}</dd></div>
+          <div class="wide"><dt class="mono-label">Languages / 언어</dt><dd>{profile.languages.join(' · ')}</dd></div>
+          <div class="wide"><dt class="mono-label">Education / 학력</dt><dd>{profile.school} · {profile.program}, minors in {profile.minors} · {profile.graduation} · {profile.average} cumulative average</dd></div>
+          <div class="wide"><dt class="mono-label">Professional authority / 발행관청</dt><dd class="bio">{profile.bio}</dd></div>
+        </dl>
+      </div>
+    </article>
+  </section>
+
+  {interests.length > 0 && (
+    <section class="container section" aria-labelledby="interests-h">
+      <SectionDivider title="Interests" id="interests-h" />
+      <BaggageCarousel />
+    </section>
+  )}
+
+  <section class="container section" aria-labelledby="lived-h">
+    <SectionDivider title="Where I’ve lived" id="lived-h" />
+    <div class="card journey-card">
+      <div class="journey-head">
+        <h3 class="journey-title">My global journey</h3>
+        <p class="mono-label">{countries} countries · {cities.length} homes · 1 path</p>
+      </div>
+      <JourneyMap interactive />
+      <ol class="city-cards">
+        {cities.map((c, i) => (
+          <li class="city">
+            <span class="num" aria-hidden="true">{i + 1}</span>
+            <div>
+              <p class="country">{c.data.country}</p>
+              <p class="city-name"><span class="dot" aria-hidden="true"></span>{c.data.city}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .passport {
+    display: flex;
+    gap: 38px;
+    padding: 24px;
+  }
+  .photo {
+    flex: 0 0 auto;
+    width: 220px;
+    aspect-ratio: 280 / 340;
+    display: grid;
+    place-items: center;
+    background:
+      linear-gradient(160deg, rgb(113 203 235 / 0.25), transparent 60%),
+      var(--silver-100);
+    border: 1px solid var(--silver-200);
+  }
+  .photo span {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 48px;
+    color: var(--ink);
+    opacity: 0.25;
+  }
+  .fields { flex: 1; min-width: 0; padding-top: 12px; }
+  .doc-title {
+    padding-bottom: 18px;
+    border-bottom: 2px solid var(--main-blue);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 32px;
+    padding-block: 24px;
+    border-bottom: 1px solid var(--silver-200);
+  }
+  .grid div { display: flex; flex-direction: column; gap: 4px; }
+  .grid .wide { grid-column: 1 / -1; }
+  .grid dd { font-weight: 800; font-size: 16px; }
+  .grid dd.bio { font-weight: 400; font-size: 15px; }
+
+  .journey-card { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .journey-title { font-weight: 800; font-size: 20px; text-transform: uppercase; }
+  .journey-head .mono-label { margin-top: 6px; }
+
+  .city-cards {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+  }
+  .city {
+    display: flex;
+    gap: 10px;
+    padding: 14px 12px;
+    border: 1px solid var(--silver-200);
+    border-radius: var(--radius);
+  }
+  .num {
+    flex: 0 0 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--white);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .country { font-weight: 800; font-size: 14px; line-height: 1.2; }
+  .city-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sky-blue); }
+
+  @media (max-width: 1279px) {
+    .city-cards { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 1023px) {
+    .passport { flex-direction: column; }
+    .photo { width: 160px; }
+  }
+  @media (max-width: 767px) {
+    .grid { grid-template-columns: 1fr; }
+    .city-cards { grid-template-columns: repeat(2, 1fr); }
+    .journey-card { padding: 16px; }
+    .passport { padding: 18px; }
+  }
+</style>

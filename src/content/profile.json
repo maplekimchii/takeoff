@@ -1,0 +1,30 @@
+{
+  "name": "Sean Kim",
+  "givenNames": "Sean",
+  "surname": "Kim",
+  "headline": "I work where software, data and finance meet.",
+  "intro": "Statistics student at the University of Waterloo, with minors in Computer Science and Economics. I’ve lived in seven cities on four continents and now call Toronto home.",
+  "bio": "Statistics student at the University of Waterloo, with minors in Computer Science and Economics. I work where software, data and finance meet.",
+  "school": "University of Waterloo",
+  "program": "Honours Bachelor of Mathematics in Statistics",
+  "minors": "Computer Science and Economics",
+  "graduation": "2029 (expected)",
+  "average": "90.29%",
+  "honours": [
+    "President’s Scholar of Distinction",
+    "Term Distinction in all terms"
+  ],
+  "location": "Toronto, ON",
+  "nationality": "Republic of Korea",
+  "availability": "Open to co-op and internship roles",
+  "lookingFor": "I’m open to co-op and internship roles in software, data and finance. Email is the fastest way to reach me.",
+  "languages": [
+    "English",
+    "Korean",
+    "French (conversational)"
+  ],
+  "email": "s66kim@uwaterloo.ca",
+  "linkedin": "https://linkedin.com/in/k-sean",
+  "github": "https://github.com/maplekimchii",
+  "resume": "/sean-kim-resume.pdf"
+}

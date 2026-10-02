@@ -1,0 +1,8 @@
+[
+  { "id": "formula-1", "title": "Formula 1", "blurb": null, "bag": "suitcase" },
+  { "id": "drumming", "title": "Drumming", "blurb": null, "bag": "duffel" },
+  { "id": "golf", "title": "Golf", "blurb": null, "bag": "backpack" },
+  { "id": "defence", "title": "Defence industry", "blurb": null, "bag": "briefcase" },
+  { "id": "poker", "title": "Poker", "blurb": null, "bag": "suitcase" },
+  { "id": "bartending", "title": "Bartending", "blurb": null, "bag": "duffel" }
+]

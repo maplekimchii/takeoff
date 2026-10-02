@@ -1,0 +1,129 @@
+[
+  {
+    "id": "axl-labs",
+    "term": "Fall 2026",
+    "start": "2026-09",
+    "end": null,
+    "type": "",
+    "role": "AI Engineer",
+    "organisation": "AXL Labs",
+    "location": "Toronto, ON",
+    "details": [
+      "Build MVPs for portfolio companies, bringing LLMs and ML models into full-stack apps from prototype to release."
+    ],
+    "featured": true
+  },
+  {
+    "id": "rbc-investment-analyst",
+    "term": "Summer 2026",
+    "start": "2026-06",
+    "end": "2026-08",
+    "type": "",
+    "role": "Investment Analyst, CIO Office",
+    "organisation": "RBC Insurance",
+    "location": "Toronto, ON",
+    "details": [
+      "Wrote annual performance reviews for $1.1B of committed capital across 12+ real estate and infrastructure equity funds.",
+      "Co-built the diligence framework used to screen 20+ managers for $1B of CLO, infrastructure debt and infrastructure equity mandates."
+    ],
+    "featured": true
+  },
+  {
+    "id": "rbc-actuarial-analyst",
+    "term": "Winter 2026",
+    "start": "2026-01",
+    "end": "2026-04",
+    "type": "",
+    "role": "Actuarial Analyst, CIO Office",
+    "organisation": "RBC Insurance",
+    "location": "Toronto, ON",
+    "details": [
+      "Modelled liability cash flows, key rate durations and convexity in Pandas to strengthen duration matching.",
+      "Automated recurring asset-liability workflows in Python with the Bloomberg API."
+    ],
+    "featured": false
+  },
+  {
+    "id": "uw-finance-association",
+    "term": "Fall 2025",
+    "start": "2025-09",
+    "end": null,
+    "type": "Student club",
+    "role": "Analyst",
+    "organisation": "University of Waterloo Finance Association",
+    "location": "Waterloo, ON",
+    "details": [],
+    "featured": false
+  },
+  {
+    "id": "double-degree-club",
+    "term": "Fall 2025",
+    "start": "2025-09",
+    "end": "2026-01",
+    "type": "Student club",
+    "role": "President",
+    "organisation": "Waterloo/Laurier Double Degree Club",
+    "location": "Waterloo, ON",
+    "details": [],
+    "featured": false
+  },
+  {
+    "id": "korn-ferry",
+    "term": "Summer 2025",
+    "start": "2025-06",
+    "end": "2025-08",
+    "type": "Internship",
+    "role": "Consulting Intern, Organizational Consulting",
+    "organisation": "Korn Ferry International",
+    "location": "Seoul, South Korea",
+    "details": [
+      "Ran HR due diligence for the cross-border acquisition of a content startup valued at $500M."
+    ],
+    "featured": false
+  },
+  {
+    "id": "aleph-lab",
+    "term": "Winter 2025",
+    "start": "2025-03",
+    "end": "2025-06",
+    "type": "Startup",
+    "role": "Co-Founder",
+    "organisation": "Aleph Lab (YC F25, formerly Lucid AI)",
+    "location": "Seoul, South Korea",
+    "details": [
+      "Built a macOS AI agent in Swift and Python that operates the computer through the Accessibility API, driven by a Gemini vision-and-action loop.",
+      "Pitched to enterprises and VCs across the US, Europe and Asia; the company was valued at $1M."
+    ],
+    "featured": true
+  },
+  {
+    "id": "rok-army",
+    "term": "Fall 2023",
+    "start": "2023-09",
+    "end": "2025-03",
+    "type": "Military service",
+    "role": "Fire Direction Squad Leader, Intelligence & Operations",
+    "organisation": "2nd Artillery Brigade, Republic of Korea Army",
+    "location": "Hwacheon, South Korea",
+    "details": [
+      "Built an Excel VBA dashboard that cut subordinate units’ response times by 40%.",
+      "Led a squad of 10+ soldiers in the battalion Fire Direction Center; received the Brigadier General Commendation twice."
+    ],
+    "featured": false
+  },
+  {
+    "id": "hanwha-life",
+    "term": "Summer 2023",
+    "start": "2023-06",
+    "end": "2023-08",
+    "type": "",
+    "role": "Summer Analyst, Private Equity",
+    "organisation": "Hanwha Life Insurance Co.",
+    "location": "Seoul, South Korea",
+    "details": [
+      "Underwrote private equity deals up to $100M with financial models and analysis of filings and sell-side reports.",
+      "Wrote investment memos on companies in the energy and financial software sectors."
+    ],
+    "featured": false
+  }
+]

@@ -1,0 +1,145 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  size?: 'compact' | 'large';
+  headingLevel?: 'h2' | 'h3';
+}
+const { project, size = 'compact', headingLevel = 'h3' } = Astro.props;
+const p = project.data;
+const H = headingLevel;
+const meta = [p.type, p.year].filter(Boolean).join(' · ');
+const stackLine = p.stack.slice(0, 3).join(' • ');
+const caseHref = p.caseStudy ? `/projects/${project.id}` : null;
+---
+
+<article class:list={['project-card', 'card', size]}>
+  <div class="strip">
+    <span class="code">{p.code}</span>
+    <span class="meta">{meta}</span>
+  </div>
+  <div class="thumb">
+    {p.thumbnail ? (
+      <img src={p.thumbnail} alt={`Screenshot of ${p.title}`} loading="lazy" decoding="async" width="800" height="440" />
+    ) : (
+      <div class="thumb-fallback" aria-hidden="true">
+        <span class="thumb-code">{p.code}</span>
+        <span class="thumb-stack">{stackLine}</span>
+      </div>
+    )}
+  </div>
+  <div class="body">
+    <H class="title">
+      {caseHref ? <a href={caseHref}>{p.title}</a> : p.title}
+    </H>
+    <p class="summary">{p.summary}</p>
+    <p class="role"><span>Role ·</span> {p.role}</p>
+    <p class="stack"><span class="visually-hidden">Stack: </span>{p.stack.join(' · ')}</p>
+    <div class="links">
+      {caseHref && <a class="text-link" href={caseHref} aria-label={`View case study: ${p.title}`}>View case study →</a>}
+      {p.links.map((l) => (
+        <a class="text-link" href={l.href} target="_blank" rel="noopener" aria-label={`${l.label}: ${p.title} (opens in a new tab)`}>{l.label} ↗</a>
+      ))}
+    </div>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+  }
+  .strip {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--sky-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: normal;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .code {
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .thumb {
+    height: 220px;
+    background: var(--silver-100);
+  }
+  .large .thumb { height: 280px; }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .thumb-fallback {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 39px, rgb(14 42 82 / 0.05) 39px 40px),
+      var(--silver-100);
+  }
+  .thumb-code {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+  .thumb-stack {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 20px 22px;
+  }
+  .title {
+    font-weight: 800;
+    font-size: 20px;
+  }
+  .large .title { font-size: 24px; }
+  .title a { color: var(--ink); }
+  .summary {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+  .role, .stack {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .role span { text-transform: uppercase; }
+  .stack { color: var(--muted); }
+  .compact .stack { display: none; }
+  .links {
+    margin-top: auto;
+    padding-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+  .large .links {
+    border-top: 1px solid var(--silver-200);
+    padding-top: 16px;
+    margin-top: 8px;
+  }
+</style>

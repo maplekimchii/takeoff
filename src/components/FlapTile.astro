@@ -1,0 +1,29 @@
+---
+interface Props {
+  char: string; // use ' ' for an empty flap
+}
+const { char } = Astro.props;
+---
+
+<span class="flap" data-char={char}><span class="char">{char === ' ' ? ' ' : char}</span></span>
+
+<style>
+  .flap {
+    --w: clamp(56px, 18vw, 88px);
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: var(--w);
+    aspect-ratio: 88 / 120;
+    border-radius: 6px;
+    overflow: hidden;
+    background: linear-gradient(var(--white) 0 49.17%, var(--silver-50) 49.17% 50.83%, var(--ink) 50.83%);
+  }
+  .char {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: calc(var(--w) * 84 / 88);
+    line-height: 1;
+    color: var(--flap-yellow);
+  }
+</style>
